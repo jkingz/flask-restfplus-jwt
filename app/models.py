@@ -24,3 +24,12 @@ class UserModel(db.Model):
                 'password': x.password
             }
         return {'users': list(map(lambda x: to_json(x), UserModel.query.all()))}
+
+    @classmethod
+    def delete_all(cls):
+        try:
+            num_rows_deleted = db.session.query(cls).delete()
+            db.session.commit()
+            return {'message': '{} row(s) deleted'.format(num_rows_deleted)}
+        except:
+            return {'message': 'Something went wrong'}
