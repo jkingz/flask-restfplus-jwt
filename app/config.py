@@ -21,6 +21,9 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///app.db'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+    #JWT
+    JWT_SECRET_KEY = 'jwt-secret-string'
+
     APP_DIR = os.path.dirname(__file__)
     ROOT_DIR = os.path.dirname(APP_DIR)
     DIST_DIR = os.path.join(ROOT_DIR, 'dist')

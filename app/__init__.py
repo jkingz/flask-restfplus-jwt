@@ -1,5 +1,6 @@
 import os
 from flask import Flask, current_app, send_file
+from flask_jwt_extended import JWTManager
 
 from .api import api_bp
 from .client import client_bp
@@ -15,6 +16,8 @@ def create_tables():
 
 from .config import Config
 app.logger.info('>>> {}'.format(Config.FLASK_ENV))
+
+jwt = JWTManager(app)
 
 @app.route('/')
 def index_client():
