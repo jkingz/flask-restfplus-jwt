@@ -6,7 +6,7 @@ from flask_restplus import Resource, reqparse
 # from flask_restful import Resource
 
 from . import api_rest
-
+from app.models import UserModel
 
 parser = reqparse.RequestParser()
 parser.add_argument('username', help = 'This field cannot be blank', required = True)
@@ -17,7 +17,21 @@ parser.add_argument('password', help = 'This field cannot be blank', required = 
 class UserRegistration(Resource):
     def post(self):
         data = parser.parse_args()
-        return data
+        if UserModel.find_by_username(data['username']):
+            return {
+                'message': f"User {data['username']} already exists."
+            }
+        new_user = UserModel(
+            username = data['username'],
+            password = data['password']
+        )
+        try:
+            new_user.save_to_db()
+            return{
+                'message': f"User {data['username']} was created"
+            }
+        except:
+            return {'message': f"something went wrong"}, 500
 
 
 @api_rest.route('/login')
