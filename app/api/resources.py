@@ -98,6 +98,7 @@ class allUsers(Resource):
 
 @api_rest.route('/secret')
 class SecretResource(Resource):
+    @jwt_required
     def get(self):
         return {
             'answer': 42
