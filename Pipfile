@@ -13,6 +13,9 @@ passlib = "*"
 flask-sqlalchemy = "*"
 flask-dotenv = "*"
 gunicorn = "*"
+flask-cors = "*"
+flask-restplus = "*"
+python-dotenv = "*"
 
 [requires]
 python_version = "3.7"
