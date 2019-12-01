@@ -13,7 +13,7 @@ from flask_jwt_extended import (
     )
 
 from . import api_rest
-from app.models import UserModel
+from app.models import UserModel, RevokedTokenModel
 
 parser = reqparse.RequestParser()
 parser.add_argument('username', help = 'This field cannot be blank', required = True)
@@ -71,8 +71,16 @@ class UserLogin(Resource):
 
 @api_rest.route('/logout/access')
 class UserLogoutAccess(Resource):
+    @jwt_required
     def post(self):
-        return {'message': 'logout'}
+        jti = get_raw_jwt()['jti']
+        try:
+            revoked_token = RevokedTokenModel(jti = jti)
+            revoked_token.add()
+            return {'message': f"Access token has been revoked"}
+        except:
+            return {'message': 'Something went wrong'}, 500
+
 
 
 @api_rest.route('/logout/refresh')
