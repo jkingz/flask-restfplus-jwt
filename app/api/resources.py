@@ -23,7 +23,7 @@ class UserRegistration(Resource):
             }
         new_user = UserModel(
             username = data['username'],
-            password = data['password']
+            password = UserModel.generate_hash(data['password'])
         )
         try:
             new_user.save_to_db()
