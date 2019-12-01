@@ -56,8 +56,12 @@ class UserLogin(Resource):
             }
         
         if UserModel.verify_hash(data['password'], current_user.password):
+            access_token = create_access_token(identity = data['username'])
+            refresh_token = create_refresh_token(identity = data['username'])
             return{
-                'message': f"Logged in as {current_user.username}"
+                'message': f"Logged in as {current_user.username}",
+                'access_token': access_token,
+                'refresh_token': refresh_token
             }
         else:
             return{
