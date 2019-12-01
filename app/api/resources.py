@@ -38,7 +38,20 @@ class UserRegistration(Resource):
 class UserLogin(Resource):
     def post(self):
         data = parser.parse_args()
-        return data
+        current_user = UserModel.find_by_username(data['username'])
+        if not current_user:
+            return{
+                'message': f"User {data['username']} doesn\'t exist'"
+            }
+        
+        if data['password'] == current_user.password:
+            return{
+                'message': f"Logged in as {current_user.username}"
+            }
+        else:
+            return{
+                'message': f"Wrong credentials"
+            }
 
 
 @api_rest.route('/logout/access')
