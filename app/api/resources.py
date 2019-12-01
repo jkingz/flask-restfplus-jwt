@@ -82,11 +82,17 @@ class UserLogoutAccess(Resource):
             return {'message': 'Something went wrong'}, 500
 
 
-
 @api_rest.route('/logout/refresh')
 class UserLogoutRefresh(Resource):
+    @jwt_refresh_token_required
     def post(self):
-        return {'message': 'logout refresh'}
+        jti = get_raw_jwt()['jti']
+        try:
+            revoked_token = RevokedTokenModel(jti = jti)
+            revoked_token.add()
+            return {'message': 'Refresh token has been revoked'}
+        except:
+            return {'message': 'Something went wrong'}, 500
 
 
 @api_rest.route('/token/refresh')
