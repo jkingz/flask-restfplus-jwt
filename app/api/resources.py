@@ -74,11 +74,9 @@ class TokenRefresh(Resource):
 
 @api_rest.route('/users')
 class allUsers(Resource):
-    def get(sefl):
-        return {'message': 'Hello users'}
+    def get(self):
+        return UserModel.return_all()
 
-    def post(sefl):
-        return {'message': 'delete users'}
 
 @api_rest.route('/secret')
 class SecretResource(Resource):
