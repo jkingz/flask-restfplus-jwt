@@ -77,6 +77,9 @@ class allUsers(Resource):
     def get(self):
         return UserModel.return_all()
 
+    def delete(self):
+        return UserModel.delete_all()
+
 
 @api_rest.route('/secret')
 class SecretResource(Resource):
