@@ -44,7 +44,7 @@ class UserLogin(Resource):
                 'message': f"User {data['username']} doesn\'t exist'"
             }
         
-        if data['password'] == current_user.password:
+        if UserModel.verify_hash(data['password'], current_user.password):
             return{
                 'message': f"Logged in as {current_user.username}"
             }
