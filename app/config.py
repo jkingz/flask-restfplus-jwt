@@ -5,6 +5,7 @@ See `.flaskenv` for default settings.
 """
 import os
 from flask_cors import CORS
+from .extensions import db
 
 
 from app import app
@@ -17,6 +18,8 @@ class Config(object):
 
     # DATABASE
     #
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///app.db'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     APP_DIR = os.path.dirname(__file__)
     ROOT_DIR = os.path.dirname(APP_DIR)
@@ -27,4 +30,5 @@ class Config(object):
     #         'DIST_DIR not found: {}'.format(DIST_DIR))
 
 app.config.from_object('app.config.Config')
+db.init_app(app)
 CORS(app)
